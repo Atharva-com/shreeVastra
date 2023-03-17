@@ -6,7 +6,6 @@ var jwt = require('jsonwebtoken');
 
 const handler = async (req, res) => {
     if (req.method == 'POST') {
-        console.log(req.body)
         const {name, phone, email} = req.body
         let u = new User({name, email, password: CryptoJS.AES.encrypt(req.body.password, process.env.AES_SECRET ).toString(), phone})
         await u.save()
