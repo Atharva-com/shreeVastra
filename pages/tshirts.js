@@ -24,10 +24,10 @@ const Tshirts = ({ products }) => {
 
           
           <div className="container lg:px-0 px-5 pb-24 pt-12 mx-auto">
-            <div className="flex flex-wrap justify-center items-center m-auto ">
-              {Object.keys(products).length == 0 && <p className='flex items-center justify-center md:w-2/3 text-red-400 text-2xl'>Sorry , All the T-shirts are currently <b>Out Of Stock</b> . New Stock will be available soon . Stay Tuned . </p>}
+            <div className="flex flex-wrap justify-start items-center m-auto ">
+              {Object.keys(products).length == 0 && <p className='flex items-center justify-center w-full text-red-400 text-2xl'>Sorry , All the T-shirts are currently <b>Out Of Stock</b> . New Stock will be available soon . Stay Tuned . </p>}
               {Object.keys(products).map((item) => {
-                return (<Link passHref={true} key={products[item]._id} href={`/product/${products[item].slug}`} className="lg:w-[15rem] md:w-1/3 p-3 w-full md:mr-1 mx-6 mb-16 cursor-pointer shadow-md bg-gray-800 shadow-gray-600">
+                return (<Link passHref={true} key={products[item]._id} href={`/product/${products[item].slug}`} className="lg:w-[19rem] md:w-1/3 p-3 w-full md:mr-1 mx-6 mb-16 cursor-pointer shadow-md bg-gray-800 shadow-gray-600">
                   <div >
                     <div className="flex w-full items-center justify-center relative rounded overflow-hidden">
                       <img alt="ecommerce" className="w-full h-[45vh] md:h-[45vh] m-auto md:mx-0 block  hover:opacity-80 hover:scale-125" src={products[item].img} />
@@ -70,9 +70,11 @@ const Tshirts = ({ products }) => {
 
 export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {           // check the Previous connections
-    await mongoose.connect(process.env.MONGO_URI)
+    await mongoose.connect('mongodb://localhost:27017/shreeVastra/')
   }
+
   let products = await Product.find({ category: 'tshirt' })
+
   let tshirts = {}
   for (let item of products) {
     if (item.title in tshirts) {
